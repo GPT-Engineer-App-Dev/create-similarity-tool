@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import CategoryIcon from '../components/CategoryIcon';
 import ExperienceCard from '../components/ExperienceCard';
@@ -14,34 +14,39 @@ const categories = [
 ];
 
 const fetchExperiences = async () => {
-  // Simulating an API call
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return [
-    {
-      image: 'https://source.unsplash.com/random/800x600?concert',
-      title: 'Live Music Experience',
-      host: 'John Doe',
-      status: 'Coming August 21',
-    },
-    {
-      image: 'https://source.unsplash.com/random/800x600?cooking',
-      title: 'Cooking Class with a Chef',
-      host: 'Jane Smith',
-      status: 'Coming October',
-    },
-    {
-      image: 'https://source.unsplash.com/random/800x600?art',
-      title: 'Art Gallery Tour',
-      host: 'Alice Johnson',
-      status: 'Sold out',
-    },
-    {
-      image: 'https://source.unsplash.com/random/800x600?yoga',
-      title: 'Sunset Yoga Session',
-      host: 'Bob Williams',
-      status: 'Available now',
-    },
-  ];
+  try {
+    // Simulating an API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return [
+      {
+        image: 'https://source.unsplash.com/random/800x600?concert',
+        title: 'Live Music Experience',
+        host: 'John Doe',
+        status: 'Coming August 21',
+      },
+      {
+        image: 'https://source.unsplash.com/random/800x600?cooking',
+        title: 'Cooking Class with a Chef',
+        host: 'Jane Smith',
+        status: 'Coming October',
+      },
+      {
+        image: 'https://source.unsplash.com/random/800x600?art',
+        title: 'Art Gallery Tour',
+        host: 'Alice Johnson',
+        status: 'Sold out',
+      },
+      {
+        image: 'https://source.unsplash.com/random/800x600?yoga',
+        title: 'Sunset Yoga Session',
+        host: 'Bob Williams',
+        status: 'Available now',
+      },
+    ];
+  } catch (error) {
+    console.error('Error fetching experiences:', error);
+    throw error;
+  }
 };
 
 const Index = () => {
@@ -50,8 +55,8 @@ const Index = () => {
     queryFn: fetchExperiences,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error occurred: {error.message}</div>;
+  if (isLoading) return <div className="container mx-auto px-4 py-8">Loading...</div>;
+  if (error) return <div className="container mx-auto px-4 py-8">An error occurred: {error.message}</div>;
 
   return (
     <div className="min-h-screen bg-white">
