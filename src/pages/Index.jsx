@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import CategoryIcon from '../components/CategoryIcon';
 import ExperienceCard from '../components/ExperienceCard';
 import { Bed, Palmtree, Mountain, Castle, Tent } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 
 const categories = [
   { icon: Bed, label: 'Stays' },
@@ -12,34 +13,46 @@ const categories = [
   { icon: Tent, label: 'Camping' },
 ];
 
-const experiences = [
-  {
-    image: 'https://source.unsplash.com/random/800x600?concert',
-    title: 'Live Music Experience',
-    host: 'John Doe',
-    status: 'Coming August 21',
-  },
-  {
-    image: 'https://source.unsplash.com/random/800x600?cooking',
-    title: 'Cooking Class with a Chef',
-    host: 'Jane Smith',
-    status: 'Coming October',
-  },
-  {
-    image: 'https://source.unsplash.com/random/800x600?art',
-    title: 'Art Gallery Tour',
-    host: 'Alice Johnson',
-    status: 'Sold out',
-  },
-  {
-    image: 'https://source.unsplash.com/random/800x600?yoga',
-    title: 'Sunset Yoga Session',
-    host: 'Bob Williams',
-    status: 'Available now',
-  },
-];
+const fetchExperiences = async () => {
+  // Simulating an API call
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return [
+    {
+      image: 'https://source.unsplash.com/random/800x600?concert',
+      title: 'Live Music Experience',
+      host: 'John Doe',
+      status: 'Coming August 21',
+    },
+    {
+      image: 'https://source.unsplash.com/random/800x600?cooking',
+      title: 'Cooking Class with a Chef',
+      host: 'Jane Smith',
+      status: 'Coming October',
+    },
+    {
+      image: 'https://source.unsplash.com/random/800x600?art',
+      title: 'Art Gallery Tour',
+      host: 'Alice Johnson',
+      status: 'Sold out',
+    },
+    {
+      image: 'https://source.unsplash.com/random/800x600?yoga',
+      title: 'Sunset Yoga Session',
+      host: 'Bob Williams',
+      status: 'Available now',
+    },
+  ];
+};
 
 const Index = () => {
+  const { data: experiences, isLoading, error } = useQuery({
+    queryKey: ['experiences'],
+    queryFn: fetchExperiences,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>An error occurred: {error.message}</div>;
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
